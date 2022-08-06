@@ -17,12 +17,12 @@ task:
     T_DEVICE: lava
 
   download_stuff_background_script:
-    - bash download_cc.sh
+    - bash download_ccache.sh
   upload_stuff_background_script:
-    - bash upload_cc.sh
+    - bash upload_ccache.sh
   retry_stuff_background_script:
-    - bash retry_cc.sh
+    - bash retry_ccache.sh
   build_script:
     - bash build.sh
   final_upload_cc_script:
-    - bash final_upload_cc.sh
+    - bash final_upload_ccache.sh
