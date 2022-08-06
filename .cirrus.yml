@@ -24,5 +24,5 @@ task:
     - bash retry_c.sh
   build_script:
     - bash build.sh
-  final_upload_cc_script:
+  final_upload_stuff_script:
     - bash final_upload_c.sh
