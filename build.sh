@@ -147,7 +147,10 @@ build_command() {
 	ccache_configuration
 	tree_path
 	lunch $(basename -s .mk $(find $DEVICE_TREE -maxdepth 1 -name "*$T_DEVICE*.mk"))-${BUILD_TYPE}
-	mka ${PACKAGE} -j 20
+	mka komodo -j$(nproc --all)
+        if [ ! -e out/target/product/*/*2022*.zip ]; then # you don't have to run this you're not facing oom kill issue while build is about 98-98%
+	        mka komodo -j$(nproc --all) # re-run the build cuz there's still time left considering only few targets left
+        fi
 }
 
 # Export time, time format for telegram messages
@@ -377,7 +380,6 @@ compile_moments() {
 		clone_file
 		lazy_build_post_var
 	fi
-	ssh_authenticate
 	time_sec SYNC_START
 	rom
 	build_configuration
