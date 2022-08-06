@@ -1,6 +1,6 @@
 task:
 
-  name: Builds
+  name: CI
   timeout_in: 120m
   container:
     dockerfile: Dockerfile
