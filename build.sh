@@ -17,18 +17,18 @@
 #
 
 # User
-GIT_USER="GeoPD"
+GIT_USER="BoxBoxBoxBoxBox"
 
 # Email
-GIT_EMAIL="geoemmanuelpd2001@gmail.com"
+GIT_EMAIL="xyz@gmail.com"
 
 # Local manifest
-LOCAL_MANIFEST=https://${TOKEN}@github.com/geopd/local_manifests
+LOCAL_MANIFEST=https://gitlab.com/R9Lab/Manifest.git
 
 # ROM Manifest and Branch
 rom() {
 	case "${NAME}" in
-		"AOSPA-12") MANIFEST=https://github.com/AOSPA/manifest.git BRANCH=sapphire
+		"ProjectBlaze-12.1") MANIFEST=https://github.com/ProjectBlaze/manifest.git BRANCH=12.1
 		;;
 		"AEX-12") MANIFEST=https://github.com/AospExtended/manifest.git BRANCH=12.1.x
 		;;
@@ -47,7 +47,7 @@ rom() {
 # Build package and build type
 build_package() {
 	case "${NAME}" in
-		"AOSPA-12") PACKAGE=otapackage BUILD_TYPE=user
+		"ProjectBlaze-12.1") PACKAGE=bacon BUILD_TYPE=userdebug
 		;;
 		"AEX-12") PACKAGE=aex BUILD_TYPE=user
 		;;
@@ -66,9 +66,10 @@ build_package() {
 # Export tree paths
 tree_path() {
 	# Device,vendor & kernel Tree paths
-	DEVICE_TREE=device/xiaomi/sakura
-	VENDOR_TREE=vendor/xiaomi
-	KERNEL_TREE=kernel/xiaomi/msm8953
+	DEVICE_TREE=device/xiaomi/lava
+	COMMON_DEVICE_TREE=device/xiaomi/mt6768-common
+	VENDOR_TREE=vendor/xiaomi/lava
+	KERNEL_TREE=kernel/xiaomi/mt6768
 }
 
 # Build post-gen variables (optional)
@@ -99,6 +100,8 @@ build_dir() {
 
 # Git configuration values
 git_setup() {
+        sudo touch /etc/mtab
+        sudo chmod 777 /etc/mtab
 	git config --global user.name $GIT_USER
 	git config --global user.email $GIT_EMAIL
 
@@ -144,7 +147,7 @@ build_command() {
 	ccache_configuration
 	tree_path
 	lunch $(basename -s .mk $(find $DEVICE_TREE -maxdepth 1 -name "*$T_DEVICE*.mk"))-${BUILD_TYPE}
-	m ${PACKAGE} -j 20
+	mka ${PACKAGE} -j 20
 }
 
 # Export time, time format for telegram messages
