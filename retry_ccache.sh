@@ -30,7 +30,7 @@ retry_ccache () {
 	hit_rate=$(ccache -s | awk 'NR==2 { print $5 }' | tr -d '(' | cut -d'.' -f1)
 	if [[ $hit_rate -lt 100 && ! -f out/build_error ]]; then
 		echo "Ccache is not fully configured"
-		git clone https://${TOKEN}@github.com/geopd/Builder-CI-A12 cirrus && cd $_
+		git clone https://${TOKEN}@github.com/BoxBoxBoxBoxBox/CI cirrus && cd $_
 		git commit --allow-empty -m "Retry: Ccache loop $(date -u +"%D %T%p %Z")"
 		git push -q
 	elif [[  -f out/build_error ]]; then
