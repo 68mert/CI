@@ -147,9 +147,9 @@ build_command() {
 	ccache_configuration
 	tree_path
 	lunch $(basename -s .mk $(find $DEVICE_TREE -maxdepth 1 -name "*$T_DEVICE*.mk"))-${BUILD_TYPE}
-	mka komodo -j$(nproc --all)
+	m ${PACKAGE} -j 20
         if [ ! -e out/target/product/*/*2022*.zip ]; then # you don't have to run this you're not facing oom kill issue while build is about 98-98%
-	        mka komodo -j$(nproc --all) # re-run the build cuz there's still time left considering only few targets left
+	        m ${PACKAGE} -j 20 # re-run the build cuz there's still time left considering only few targets left
         fi
 }
 
