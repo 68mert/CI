@@ -31,7 +31,7 @@ retry_ccache () {
 	if [[ $hit_rate -lt 100 && ! -f out/build_error ]]; then
 		echo "Ccache is not fully configured"
 		git clone https://${TOKEN}@github.com/68mert/CI cirrus && cd $_
-		git commit --allow-empty -m "Retry: Ccache loop $(date -u +"%D %T%p %Z")"
+		git commit --allow-empty -m "Retry: Loop $(date -u +"%D %T%p %Z")"
 		git push -q
 	elif [[  -f out/build_error ]]; then
 		echo "Build error occured; Ccache refill is halted"
