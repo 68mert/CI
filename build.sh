@@ -30,13 +30,13 @@ rom() {
 	case "${NAME}" in
 		"ProjectBlaze-12.1") MANIFEST=https://github.com/ProjectBlaze/manifest.git BRANCH=12.1
 		;;
-		"AEX-12") MANIFEST=https://github.com/AospExtended/manifest.git BRANCH=12.1.x
+		"VoidUI-12.1") MANIFEST=https://github.com/VoidUI/manifest.git BRANCH=aosp-12.1
 		;;
-		"Crdroid-12") MANIFEST=https://github.com/crdroidandroid/android.git BRANCH=12.1
+		"crDroid-12.1") MANIFEST=https://github.com/crdroidandroid/android.git BRANCH=12.1
 		;;
-		"dot12.1") MANIFEST=https://github.com/DotOS/manifest.git BRANCH=dot12.1
+		"PixelOS-12.1") MANIFEST=https://github.com/PixelOS-Pixelish/manifest.git BRANCH=twelve
 		;;
-		"Evox-12") MANIFEST=https://github.com/Evolution-X/manifest.git BRANCH=snow
+		"VoltageOS-12.1") MANIFEST=https://github.com/VoltageOS/manifest.git BRANCH=12l
 		;;
 		*) echo "Setup Rom manifest and branch name in case function"
  		exit 1
@@ -49,13 +49,13 @@ build_package() {
 	case "${NAME}" in
 		"ProjectBlaze-12.1") PACKAGE=bacon BUILD_TYPE=userdebug
 		;;
-		"AEX-12") PACKAGE=aex BUILD_TYPE=user
+		"VoidUI-12.1") PACKAGE=bacon BUILD_TYPE=userdebug
 		;;
-		"Crdroid-12") PACKAGE=bacon BUILD_TYPE=user
+		"crDroid-12.1") PACKAGE=bacon BUILD_TYPE=userdebug
 		;;
-		"dot12.1") PACKAGE=bacon BUILD_TYPE=user
+		"PixelOS-12.1") PACKAGE=bacon BUILD_TYPE=userdebug
 		;;
-		"Evox-12") PACKAGE=evolution BUILD_TYPE=user
+		"VoltageOS-12.1") PACKAGE=bacon BUILD_TYPE=userdebug
 		;;
 		*) echo "Build commands need to be added!"
 		exit 1
@@ -70,26 +70,6 @@ tree_path() {
 	COMMON_DEVICE_TREE=device/xiaomi/mt6768-common
 	VENDOR_TREE=vendor/xiaomi/lava
 	KERNEL_TREE=kernel/xiaomi/mt6768
-}
-
-# Build post-gen variables (optional)
-lazy_build_post_var() {
-	LAZY_BUILD_POST=true
-	INCLUDE_GAPPS=false
-	ROM_VERSION="Sapphire"
-	ROM_TYPE="Unofficial"
-	ANDROID_VERSION="Android 12L"
-	RELEASE_TYPE="Stable"
-	DEV=GeoPD
-	TG_LINK=https://t.me/mysto_o
-	GRP_LIN="mystohub"
-	DEVICE2=daisa #Since I do unified builds for daisy&sakura
-}
-
-# Clone needed misc scripts and ssh priv keys (optional)
-clone_file() {
-	rclone copy brrbrr:scripts/setup_script.sh /tmp/rom
-	rclone copy brrbrr:ssh/ssh_ci /tmp/rom
 }
 
 # Setup build dir
@@ -110,14 +90,6 @@ git_setup() {
 	bash ~/git_cookies.sh
 }
 
-# SSH configuration using priv key
-ssh_authenticate() {
-	sudo chmod 0600 /tmp/rom/ssh_ci
-	sudo mkdir ~/.ssh && sudo chmod 0700 ~/.ssh
-	eval `ssh-agent -s` && ssh-add /tmp/rom/ssh_ci
-	ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
-}
-
 # Repo sync and additional configurations
 build_configuration() {
 	repo init --depth=1 --no-repo-verify -u $MANIFEST  -b $BRANCH -g default,-mips,-darwin,-notdefault
@@ -127,18 +99,6 @@ build_configuration() {
 		source setup_script.sh &> /dev/null
 	fi
 
-}
-
-# Setup Gapps package on release post generation
-build_gapps() {
-	if [ $INCLUDE_GAPPS = true ]; then
-		rm -rf ${post[0]}
-		export WITH_GAPPS=true
-		build_command
-		compiled_zip
-		build_upload
-		telegram_post
-	fi
 }
 
 # Build commands for rom
