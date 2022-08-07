@@ -17,10 +17,10 @@
 #
 
 # User
-GIT_USER="BoxBoxBoxBoxBox"
+GIT_USER="orkunergun"
 
 # Email
-GIT_EMAIL="xyz@gmail.com"
+GIT_EMAIL="hesaphesapyus@gmail.com"
 
 # Local manifest
 LOCAL_MANIFEST=https://gitlab.com/R9Lab/Manifest.git
