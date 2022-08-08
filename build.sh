@@ -38,6 +38,8 @@ rom() {
 		;;
 		"SparkOS-12.1") MANIFEST=https://github.com/Spark-Rom/manifest.git BRANCH=spark
 		;;
+		"CherishOS-12.1") MANIFEST=https://github.com/CherishOS/android_manifest.git BRANCH=twelve-one
+		;;
 		"VoltageOS-12.1") MANIFEST=https://github.com/VoltageOS/manifest.git BRANCH=12l
 		;;
 		*) echo "Setup Rom manifest and branch name in case function"
@@ -58,6 +60,8 @@ build_package() {
 		"PixelOS-12.1") PACKAGE=bacon BUILD_TYPE=userdebug
 		;;
 		"SparkOS-12.1") PACKAGE=bacon BUILD_TYPE=userdebug
+		;;
+		"CherishOS-12.1") PACKAGE=bacon BUILD_TYPE=userdebug
 		;;
 		"VoltageOS-12.1") PACKAGE=bacon BUILD_TYPE=userdebug
 		;;
