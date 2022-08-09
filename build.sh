@@ -141,6 +141,7 @@ commit_sha() {
 # Setup ccache
 ccache_configuration() {
 	export CCACHE_DIR=/tmp/ccache
+        export CHERISH_VANILLA=true
 	export CCACHE_EXEC=$(which ccache)
 	export USE_CCACHE=1
 	cat > ${CCACHE_DIR}/ccache.conf <<EOF
